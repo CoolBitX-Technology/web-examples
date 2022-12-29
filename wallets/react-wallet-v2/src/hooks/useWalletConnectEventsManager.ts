@@ -93,8 +93,14 @@ export default function useWalletConnectEventsManager(initialized: boolean) {
    *****************************************************************************/
   useEffect(() => {
     if (initialized) {
-      signClient.on('session_proposal', onSessionProposal)
-      signClient.on('session_request', onSessionRequest)
+      signClient.on('session_proposal', e => {
+        console.log('useWalletConnectEventsManager session_proposal event=', JSON.stringify(e, null, 2))
+        onSessionProposal(e)
+      })
+      signClient.on('session_request', e => {
+        console.log('useWalletConnectEventsManager session_request event=', e)
+        onSessionRequest(e)
+      })
       // TODOs
       signClient.on('session_ping', data => console.log('ping', data))
       signClient.on('session_event', data => console.log('event', data))

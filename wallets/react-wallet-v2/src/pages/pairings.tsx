@@ -9,8 +9,20 @@ export default function PairingsPage() {
   const [pairings, setPairings] = useState(signClient.pairing.values)
 
   async function onDelete(topic: string) {
+    console.log('click delete >> topic=', topic)
+    // try {
+    //   const pingResult = await signClient.ping({ topic })
+    //   console.log('click delete >> ping result=', pingResult);
+    // } catch (error) {
+    //   console.log('click delete >> ping error=', error);
+    // }
+
     await signClient.disconnect({ topic, reason: getSdkError('USER_DISCONNECTED') })
-    const newPairings = pairings.filter(pairing => pairing.topic !== topic)
+    console.log(
+      'click delete >> disconnected signClient.pairing.values=',
+      JSON.stringify(signClient.pairing.values, null, 2)
+    )
+    const newPairings = signClient.pairing.values
     setPairings(newPairings)
   }
 
@@ -18,9 +30,9 @@ export default function PairingsPage() {
     <Fragment>
       <PageHeader title="Pairings" />
       {pairings.length ? (
-        pairings.map(pairing => {
+        pairings.map((pairing, index) => {
           const { peerMetadata } = pairing
-
+          console.log(`pairings index=${index} pairing=${JSON.stringify(pairing, null, 2)}}`)
           return (
             <PairingCard
               key={pairing.topic}

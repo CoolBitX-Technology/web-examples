@@ -1,4 +1,4 @@
-import { parseUri } from '@walletconnect/utils'
+import { getSdkError, parseUri } from '@walletconnect/utils'
 import PageHeader from '@/components/PageHeader'
 import QrReader from '@/components/QrReader'
 import { signClient } from '@/utils/WalletConnectUtil'
@@ -19,7 +19,8 @@ export default function WalletConnectPage() {
       if (version === 1) {
         createLegacySignClient({ uri })
       } else {
-        await signClient.pair({ uri })
+        const pairing = await signClient.pair({ uri })
+        console.log(`paired pairing=${JSON.stringify(pairing, null, 2)}`)
       }
     } catch (err: unknown) {
       alert(err)

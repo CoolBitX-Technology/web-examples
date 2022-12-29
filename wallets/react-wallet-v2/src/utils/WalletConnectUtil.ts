@@ -3,6 +3,7 @@ import SignClient from '@walletconnect/sign-client'
 export let signClient: SignClient
 
 export async function createSignClient(relayerRegionURL: string) {
+  console.log('createSignClient');
   signClient = await SignClient.init({
     logger: 'debug',
     projectId: process.env.NEXT_PUBLIC_PROJECT_ID,

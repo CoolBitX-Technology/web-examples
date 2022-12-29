@@ -74,12 +74,15 @@ export default function SessionProposalModal() {
         }
       })
 
-      const { acknowledged } = await signClient.approve({
+      const approveParams = {
         id,
         relayProtocol: relays[0].protocol,
         namespaces
-      })
+      }
+      console.log('SessionProposalModal onApprove >> approveParams=', JSON.stringify(approveParams, null, 2));
+      const { acknowledged } = await signClient.approve(approveParams)
       await acknowledged()
+      console.log('SessionProposalModal onApprove >> acknowledged');
     }
     ModalStore.close()
   }
